@@ -15,7 +15,7 @@ CREATE TABLE anuncio (
   descricao text NOT NULL,
   data_criacao DATE NOT NULL,
   data_expiracao DATE NOT NULL,
-  local text,
+  local text NOT NULL,
   FOREIGN KEY (apelido_anunciante) REFERENCES usuario(apelido)
 );
 

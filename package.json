@@ -1,0 +1,32 @@
+{
+  "name": "servidor-get-promo",
+  "version": "1.0.0",
+  "description": "Servidor do projeto GetPromo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wesleyrf10/servidor-get-promo.git"
+  },
+  "keywords": [
+    "sqlite",
+    "nodejs"
+  ],
+  "author": "Wesley Rafael",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wesleyrf10/servidor-get-promo/issues"
+  },
+  "homepage": "https://github.com/wesleyrf10/servidor-get-promo#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "sequelize": "^4.41.2",
+    "sqlite3": "^4.0.4"
+  }
+}

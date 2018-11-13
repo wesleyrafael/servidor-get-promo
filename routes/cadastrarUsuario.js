@@ -1,7 +1,6 @@
 var sequelize = require('../sequelize');
 var Usuario = sequelize.Usuario;
 var bcrypt = require('bcrypt');
-//import Usuario from '../sequelize';
 
 const BCRYPT_SALT_ROUNDS = 12;
 module.exports = app => {

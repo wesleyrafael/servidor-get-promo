@@ -25,7 +25,10 @@ module.exports = (sequelize,type) => {
       type: type.INTEGER,
       allowNull: false
     }
-  })
+  },{
+    timestamps: false,
+    freezeTableName: true
+  });
 };
 /*
 // force: true will drop the table if it already exists

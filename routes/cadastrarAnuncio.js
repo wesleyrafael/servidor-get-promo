@@ -1,51 +1,50 @@
-/*var Usuario = require('../sequelize');
-var bcrypt = require('bcrypt');
-//import Usuario from '../sequelize';
+var sequelize = require('../sequelize');
+var Anuncio = sequelize.Anuncio;
 
-const BCRYPT_SALT_ROUNDS = 12;
 module.exports = app => {
-  app.post('/cadastrarUsuario', (req, res) => {
+  app.post('/cadastrarAnuncio', (req, res) => {
     const data = {
-      apelido: req.body.apelido,
-      nome: req.body.nome,
-      senha: req.body.senha,
-      email: req.body.email,
-      foto: req.body.foto,
-      permissao: req.body.permissao
+      id: req.body.id,
+      apelido_anunciante: req.body.apelido_anunciante,
+      descricao: req.body.descricao,
+      data_criacao: req.body.data_criacao,
+      data_expiracao: req.body.data_expiracao,
+      local: req.body.local
     };
-    if (data.permissao === '' || data.email === '' || data.senha === '' || data.nome === '' || data.apelido == '') {
+    if (data.local == '' || data.id === '' || data.apelido_anunciante === '' || data.descricao === '' || data.data_criacao === '' || data.data_expiracao == '') {
       res.json('Dados incompletos!');
     }
-    Usuario.findOne({
+    Anuncio.findOne({
       where: {
-        apelido: data.apelido,
+        apelido_anunciante: data.apelido_anunciante,
+        descricao: data.descricao,
+        data_criacao: data.data_criacao,
+        data_expiracao: data.data_expiracao,
+        local: data.local
       },
+      as: 'anuncio_enc',
     })
       .then(usuario => {
         if (usuario != null) {
-          console.log('apelido já existe');
-          res.json('Apelido já existe');
+          console.log('Anuncio já existe');
+          res.json('Anuncio já existe');
         } else {
-          bcrypt
-            .hash(data.senha, BCRYPT_SALT_ROUNDS)
-            .then(function(hashedPassword) {
-              Usuario.create({
-                apelido: req.body.apelido,
-                nome: req.body.nome,
-                senha: req.body.senha, //hashedPassword
-                email: req.body.email,
-                foto: req.body.foto,
-                permissao: req.body.permissao
-              }).then(() => {
-                console.log('usuario criado no db');
-                res.status(200).send({ message: 'usuario criado' });
-              });
+            Anuncio.create({
+              id: req.body.id,
+              apelido_anunciante: req.body.apelido_anunciante,
+              descricao: req.body.descricao,
+              data_criacao: req.body.data_criacao,
+              data_expiracao: req.body.data_expiracao,
+              local: req.body.local
+            }).then(() => {
+              console.log('anuncio criado no db');
+              res.status(200).send({ message: 'anuncio criado' });
             });
-        }
+          }
       })
       .catch(err => {
         console.log('problem communicating with db');
         res.status(500).json(err);
       });
   });
-};*/
+};

@@ -16,8 +16,22 @@ const sequelize = new Sequelize('getPromoDB','getpromo','getpromo2018',{
   storage: './db/get-promoDB.sqlite'
 })
 
+
+
 const Usuario = UsuarioModel(sequelize,Sequelize);
 const Anuncio = AnuncioModel(sequelize,Sequelize);
+
+Usuario.hasMany(Anuncio, {
+  foreignKey: 'apelido_anunciante',
+  otherKey: 'apelido'
+});
+
+/*Anuncio.associate = function(models) {
+  Anuncio.belongsTo(Usuario);
+};*/
+
+
+//Usuario.hasMany(Anuncio, {foreignKey:'apelido_anunciante'});
 
 sequelize.sync()
     .then(() => {

@@ -1,8 +1,7 @@
-var sequelize = require('../sequelize');
+var sequelize = require('../../sequelize');
 var Anuncio = sequelize.Anuncio;
 
-module.exports = app => {
-  app.post('/cadastrarAnuncio', (req, res) => {
+exports.cadastrarAnuncio = function (req, res) {
     const data = {
       id: req.body.id,
       apelido_anunciante: req.body.apelido_anunciante,
@@ -21,8 +20,7 @@ module.exports = app => {
         data_criacao: data.data_criacao,
         data_expiracao: data.data_expiracao,
         local: data.local
-      },
-      as: 'anuncio_enc',
+      }
     })
       .then(usuario => {
         if (usuario != null) {
@@ -46,5 +44,4 @@ module.exports = app => {
         console.log('problem communicating with db');
         res.status(500).json(err);
       });
-  });
-};
+  };

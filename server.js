@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-require('./routes/cadastrarUsuario')(app);
-require('./routes/cadastrarAnuncio')(app);
+require('./api/routes/usuarioRoutes')(app);
+require('./api/routes/anuncioRoutes')(app);
 
 app.listen(API_PORT);
 

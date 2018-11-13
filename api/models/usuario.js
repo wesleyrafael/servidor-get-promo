@@ -1,4 +1,4 @@
-var sequelize = require('sequelize');
+var sequelize = require('../../sequelize');
 module.exports = (sequelize,type) => {
   return sequelize.define('usuario', {
     apelido: {
@@ -30,12 +30,3 @@ module.exports = (sequelize,type) => {
     freezeTableName: true
   });
 };
-/*
-// force: true will drop the table if it already exists
-Usuario.sync({force: true}).then(function () {
-  // Table created
-  return User.create({
-    nome: 'John',
-    apelido: 'Hancock'
-  });
-});*/

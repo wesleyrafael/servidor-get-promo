@@ -1,5 +1,4 @@
-var sequelize = require('sequelize');
-var Usuario = require('./usuario');
+var sequelize = require('../../sequelize');
 module.exports = (sequelize,type) => {
   return sequelize.define('anuncio', {
     id: {

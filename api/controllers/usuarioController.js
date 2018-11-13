@@ -1,10 +1,10 @@
-var sequelize = require('../sequelize');
+var sequelize = require('../../sequelize');
 var Usuario = sequelize.Usuario;
 var bcrypt = require('bcrypt');
 
 const BCRYPT_SALT_ROUNDS = 12;
-module.exports = app => {
-  app.post('/cadastrarUsuario', (req, res) => {
+
+exports.cadastrarUsuario = function (req, res) {
     const data = {
       apelido: req.body.apelido,
       nome: req.body.nome,
@@ -18,7 +18,7 @@ module.exports = app => {
     }
     Usuario.findOne({
       where: {
-        apelido: data.apelido,
+        apelido: data.apelido, //adicionar funcionalidade de checar email
       },
     })
       .then(usuario => {
@@ -47,5 +47,4 @@ module.exports = app => {
         console.log('problem communicating with db');
         res.status(500).json(err);
       });
-  });
-};
+  };

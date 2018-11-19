@@ -1,3 +1,4 @@
+const Op = require('sequelize').Op;
 var sequelize = require('../../sequelize');
 var Usuario = sequelize.Usuario;
 var bcrypt = require('bcrypt');
@@ -16,15 +17,15 @@ exports.cadastrarUsuario = function (req, res) {
   if (data.permissao === '' || data.email === '' || data.senha === '' || data.nome === '' || data.apelido == '') {
     res.json('Dados incompletos!');
   }
-  Usuario.findOne({
+  Usuario.findAll({
     where: {
-      apelido: data.apelido, //adicionar funcionalidade de checar email
+      [Op.or]: [{apelido: data.apelido},{email: data.email}], //adicionar funcionalidade de checar email
     },
   })
   .then(usuario => {
     if (usuario != null) {
-      console.log('apelido já existe');
-      res.json('Apelido já existe');
+      console.log('apelido ou email já existe');
+      res.json('Apelido ou email já existe');
     } else {
       bcrypt
       .hash(data.senha, BCRYPT_SALT_ROUNDS)
@@ -32,7 +33,7 @@ exports.cadastrarUsuario = function (req, res) {
         Usuario.create({
           apelido: data.apelido,
           nome: data.nome,
-          senha: hashedPassword, 
+          senha: hashedPassword,
           email: data.email,
           foto: data.foto,
           permissao: data.permissao

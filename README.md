@@ -10,6 +10,7 @@ Módulos necessários para uso do servidor:
 - express
 - body-parser
 - morgan
+- bcrypt
 
 ##### Passos necessários para se poder rodar o servidor:
 

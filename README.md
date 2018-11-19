@@ -15,6 +15,7 @@ Para fazer requisições HTTP ao servidor, pode-se usar o módulo AXIOS (http://
 
 Exemplo de requisição: 
 
+```
 var axios = require('axios');
 console.log('in');
 axios.post('http://localhost:8080/cadastrarUsuario', {
@@ -27,3 +28,4 @@ axios.post('http://localhost:8080/cadastrarUsuario', {
  }).then(function(response){
     console.log(response.data)
  });
+ ```

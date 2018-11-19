@@ -11,16 +11,13 @@ Módulos necessários para uso do servidor:
 - body-parser
 - morgan
 
-Passos necessários para se poder rodar o servidor:
+##### Passos necessários para se poder rodar o servidor:
 
 1. Clonar o projeto;
 2. Ir à pasta do projeto e instalar os módulos necessários;
 Para instalar um módulo, é só digitar:
-```
-npm install nome_do_módulo
-```
+ `npm install nome_do_módulo `
 3. Digitar npm start na pasta do projeto.
-
 
 Para fazer requisições HTTP ao servidor, pode-se usar o módulo AXIOS (http://codeheaven.io/how-to-use-axios-as-your-http-client/).
 Exemplo de requisição: 

@@ -30,17 +30,66 @@ exports.cadastrarUsuario = function (req, res) {
       .hash(data.senha, BCRYPT_SALT_ROUNDS)
       .then(function(hashedPassword) {
         Usuario.create({
-          apelido: req.body.apelido,
-          nome: req.body.nome,
-          senha: req.body.senha, //hashedPassword
-          email: req.body.email,
-          foto: req.body.foto,
-          permissao: req.body.permissao
+          apelido: data.apelido,
+          nome: data.nome,
+          senha: hashedPassword, //req.body.senha
+          email: data.email,
+          foto: data.foto,
+          permissao: data.permissao
         }).then(() => {
           console.log('usuario '+ data.apelido + ' criado no db');
           res.status(200).send({ message: 'usuario '+ data.apelido + ' criado' });
         });
       });
+    }
+  })
+  .catch(err => {
+    console.log('problem communicating with db');
+    res.status(500).json(err);
+  });
+};
+
+exports.loginUsuario = function (req, res) {
+  const req_apelido = req.body.apelido;
+  const req_senha = req.body.senha;
+
+  Usuario.findOne({
+    attributes: ['senha'],
+    where: {
+      apelido: req_apelido
+    },
+  })
+  .then(usuario => {
+    if (usuario == null){
+      console.log('usuario nao existe');
+      res.json('usuario nao existe');
+    } else {
+      hash = usuario.senha;
+      bcrypt.compare(req_senha, hash, function(err, resp) {
+      if(resp) {
+        console.log('OK');
+        res.json('OK');
+      } else {
+        console.log('senha incorreta');
+        res.json('senha incorreta');
+      }
+      });
+    }
+  })
+  .catch(err => {
+    console.log('problem communicating with db');
+    res.status(500).json(err);
+  });
+};
+
+exports.getAllUsuarios = function (req, res) {
+  Usuario.findAll()
+  .then(usuarios => {
+    if (usuarios == null){
+      console.log('nenhum usuario cadastrado');
+      res.json('nenhum usuario cadastrado');
+    } else {
+      res.json(usuarios);
     }
   })
   .catch(err => {

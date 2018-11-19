@@ -32,7 +32,7 @@ exports.cadastrarUsuario = function (req, res) {
         Usuario.create({
           apelido: data.apelido,
           nome: data.nome,
-          senha: hashedPassword, //req.body.senha
+          senha: hashedPassword, 
           email: data.email,
           foto: data.foto,
           permissao: data.permissao

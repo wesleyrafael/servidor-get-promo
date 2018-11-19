@@ -10,7 +10,7 @@ module.exports = function(app) {
   app.route('/usuario/getUsuario/:apelido')
     .get(usuarioController.getUsuario);
 
-  app.route('/usuario/getAllUsuarios')
+  app.route('/usuario/listarUsuarios')
     .get(usuarioController.getAllUsuarios);
 
   app.route('/usuario/deleteUsuario/:apelido')

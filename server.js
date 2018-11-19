@@ -13,6 +13,7 @@ app.use(logger('dev'));
 
 require('./api/routes/usuarioRoutes')(app);
 require('./api/routes/anuncioRoutes')(app);
+require('./api/routes/categoriaRoutes')(app);
 
 app.listen(API_PORT);
 

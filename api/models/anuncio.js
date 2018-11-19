@@ -3,7 +3,11 @@ module.exports = (sequelize,type) => {
   return sequelize.define('anuncio', {
     id: {
       type: type.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+    },
+    apelido_anunciante: {
+      type: type.STRING,
+      allowNull: false
     },
     descricao: {
       type: type.STRING,

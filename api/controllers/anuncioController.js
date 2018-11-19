@@ -28,12 +28,12 @@ exports.cadastrarAnuncio = function (req, res) {
           res.json('Anuncio já existe');
         } else {
             Anuncio.create({
-              id: req.body.id,
-              apelido_anunciante: req.body.apelido_anunciante,
-              descricao: req.body.descricao,
-              data_criacao: req.body.data_criacao,
-              data_expiracao: req.body.data_expiracao,
-              local: req.body.local
+              id: data.id,
+              apelido_anunciante: data.apelido_anunciante,
+              descricao: data.descricao,
+              data_criacao: data.data_criacao,
+              data_expiracao: data.data_expiracao,
+              local: data.local
             }).then(() => {
               console.log('anuncio criado no db');
               res.status(200).send({ message: 'anuncio criado' });

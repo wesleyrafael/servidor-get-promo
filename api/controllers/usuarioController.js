@@ -17,15 +17,21 @@ exports.cadastrarUsuario = function (req, res) {
   if (data.permissao === '' || data.email === '' || data.senha === '' || data.nome === '' || data.apelido == '') {
     res.json('Dados incompletos!');
   }
-  Usuario.findAll({
+  Usuario.findOne({
     where: {
       [Op.or]: [{apelido: data.apelido},{email: data.email}], //adicionar funcionalidade de checar email
     },
   })
   .then(usuario => {
     if (usuario != null) {
-      console.log('apelido ou email já existe');
-      res.json('Apelido ou email já existe');
+      if(usuario.apelido == data.apelido){
+        console.log('apelido já cadastrado');
+        res.json('apelido já cadastrado');
+      }
+      if(usuario.email == data.email){
+        console.log('email já cadastrado');
+        res.json('email já cadastrado');
+      }
     } else {
       bcrypt
       .hash(data.senha, BCRYPT_SALT_ROUNDS)

@@ -4,4 +4,7 @@ module.exports = function(app) {
   // todoList Routes
   app.route('/anuncio/cadastrarAnuncio')
     .post(anuncioController.cadastrarAnuncio);
+
+  app.route('/anuncio/categorias/:categoria')
+    .get(anuncioController.getAnuncioPorCategoria);
 };

@@ -21,8 +21,8 @@ exports.cadastrarCategoria = function (req, res) {
             Categoria.create({
               nome_categoria: data.nome_categoria
             }).then(() => {
-              console.log('Categoria' + nome_categoria + ' criada no db');
-              res.status(200).send({ message: 'Categoria ' + nome_categoria + ' criada' });
+              console.log('Categoria ' + data.nome_categoria + ' criada no db');
+              res.status(200).send({ message: 'Categoria ' + data.nome_categoria + ' criada' });
             });
           }
       })

@@ -58,12 +58,12 @@ exports.cadastrarUsuario = function (req, res) {
 
 exports.loginUsuario = function (req, res) {
   const req_apelido = req.body.apelido;
-  const req_senha = req.body.senha;
+  const req_email = req.body.email;
 
   Usuario.findOne({
     attributes: ['senha'],
     where: {
-      apelido: req_apelido
+      email: req_email
     },
   })
   .then(usuario => {

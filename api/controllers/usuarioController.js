@@ -57,7 +57,7 @@ exports.cadastrarUsuario = function (req, res) {
 };
 
 exports.loginUsuario = function (req, res) {
-  const req_apelido = req.body.apelido;
+  const req_senha = req.body.senha;
   const req_email = req.body.email;
 
   Usuario.findOne({
@@ -68,8 +68,8 @@ exports.loginUsuario = function (req, res) {
   })
   .then(usuario => {
     if (usuario == null){
-      console.log('usuario nao existe');
-      res.json('usuario nao existe');
+      console.log('email não cadastrado');
+      res.json('email não cadastrado');
     } else {
       hash = usuario.senha;
       bcrypt.compare(req_senha, hash, function(err, resp) {

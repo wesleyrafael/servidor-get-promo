@@ -1,45 +1,61 @@
 var sequelize = require('../../sequelize');
 var Anuncio = sequelize.Anuncio;
+var Categoria = sequelize.Categoria;
 var CategoriaAnuncio = sequelize.CategoriaAnuncio;
 
 exports.getAnuncioPorCategoria = function (req, res) {
   const data = {
     categoria: req.params.categoria
   }
-  CategoriaAnuncio.findAll({
-    attributes: ['anuncio_id'],
+
+  Categoria.findOne({
     where: {
       nome_categoria: data.categoria
-    },
-    raw: true
-  })
-  .then(ids => {
-    if (ids == null){
-      console.log('nenhum anuncio cadastrado nessa categoria');
-      res.json('nenhum anuncio cadastrado nessa categoria');
-    } else {
-
-      var unpacked_ids = [];
-      ids.forEach(function(an_id){
-        console.log(an_id.anuncio_id);
-        unpacked_ids.push(an_id.anuncio_id);
-      });
-      console.log(unpacked_ids);
-
-      Anuncio.findAll({
+    }
+  }).then(categoria => {
+    if(categoria == null){
+      console.log('a categoria ' + data.categoria + ' não existe');
+      res.json('a categoria ' + data.categoria + ' não existe');
+    }
+    else{
+      CategoriaAnuncio.findAll({
+        attributes: ['anuncio_id'],
         where: {
-          anuncio_id: unpacked_ids
+          nome_categoria: data.categoria
+        },
+        raw: true
+      })
+      .then(ids => {
+        if (ids == null){
+          console.log('nenhum anuncio cadastrado nessa categoria');
+          res.json('nenhum anuncio cadastrado nessa categoria');
+        } else {
+
+          var unpacked_ids = [];
+          ids.forEach(function(an_id){
+            console.log(an_id.anuncio_id);
+            unpacked_ids.push(an_id.anuncio_id);
+          });
+          console.log(unpacked_ids);
+
+          Anuncio.findAll({
+            where: {
+              anuncio_id: unpacked_ids
+            }
+          }).then(anuncios => {
+            console.log('anuncios enviados');
+            res.status(200).json(anuncios);
+          });
         }
-      }).then(anuncios => {
-        console.log('anuncios enviados');
-        res.status(200).json(anuncios);
+
       });
     }
-  })
-  .catch(err => {
+  }).catch(err => {
     console.log('problem communicating with db ' + err);
     res.status(500).json(err);
   });
+
+
 };
 
 exports.cadastrarAnuncio = function (req, res) {

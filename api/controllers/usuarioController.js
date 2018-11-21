@@ -12,14 +12,17 @@ exports.cadastrarUsuario = function (req, res) {
     senha: req.body.senha,
     email: req.body.email,
     foto: req.body.foto,
-    permissao: req.body.permissao
+    permissao: req.body.permissao,
+    favorita1: req.categoria_favorita1,
+    favorita2: req.categoria_favorita2,
+    favorita3: req.categoria_favorita3
   };
   if (data.permissao === '' || data.email === '' || data.senha === '' || data.nome === '' || data.apelido == '') {
     res.json('Dados incompletos!');
   }
   Usuario.findOne({
     where: {
-      [Op.or]: [{apelido: data.apelido},{email: data.email}], //adicionar funcionalidade de checar email
+      [Op.or]: [{apelido: data.apelido},{email: data.email}],
     },
   })
   .then(usuario => {
@@ -42,7 +45,10 @@ exports.cadastrarUsuario = function (req, res) {
           senha: hashedPassword,
           email: data.email,
           foto: data.foto,
-          permissao: data.permissao
+          permissao: data.permissao,
+          categoria_favorita1: data.favorita1,
+          categoria_favorita2: data.favorita2,
+          categoria_favorita3: data.favorita3
         }).then(() => {
           console.log('usuario '+ data.apelido + ' criado no db');
           res.status(200).send({ message: 'usuario '+ data.apelido + ' criado' });
@@ -142,45 +148,75 @@ exports.getAllUsuarios = function (req, res) {
   });
 };
 
-/*exports.mudarApelido = function (req, res) {
-  const apelido_antigo = req.params.apelidoAntigo;
+exports.mudarApelido = function (req, res) {
+  const apelido_antigo = req.body.apelido_antigo;
   const apelido_novo = req.body.apelido_novo;
   if (apelido_novo == '') {
     res.json('Dados incompletos!');
   }
 
   Usuario.findOne({
+    attributes: ['apelido'],
     where: {
       apelido: apelido_novo
     },
   })
   .then(usuario => {
-    if (usuario =! null){
+    if (usuario != null){
       console.log('Apelido ja existe');
       res.json('Apelido ja existe');
     }
+    else{
+      Usuario.update(
+        {apelido: apelido_novo},
+        {where: {apelido: apelido_antigo}}
+      ).then(() =>{
+        res.status(200).json({message: 'usuario com apelido ' + apelido_antigo +
+                                       ' mudou seu apelido para ' + apelido_novo});
+      });
+    }
   })
   .catch(err => {
-    console.log('problem communicating with db');
+    console.log('problem communicating with db ' + err);
     res.status(500).json(err);
   });
+};
+
+exports.mudarEmail = function (req, res) {
+  const email_antigo = req.body.email_antigo;
+  const email_novo = req.body.email_novo;
+  if (email_novo == '') {
+    res.json('Dados incompletos!');
+  }
 
   Usuario.findOne({
+    attributes: ['email'],
     where: {
-        apelido: apelido_antigo
-      },
-    })
-    .then(usuario_att => {
-      usuario_att.update({apelido: apelido_novo});
-      console.log('usuario ' + apelido_antigo + ' agora é ' + apelido_novo);
-      res.json('usuario ' + apelido_antigo + ' agora é ' + apelido_novo);
+      email: email_novo
+    },
+  })
+  .then(usuario => {
+    if (usuario != null){
+      console.log('email ja cadastrado');
+      res.json('email ja cadastrado');
+    }
+    else{
+      Usuario.update(
+        {email: email_novo},
+        {where: {email: email_antigo}}
+      ).then(() =>{
+        res.status(200).json({message: 'usuario com email ' + email_antigo +
+                                       ' mudou seu email para ' + email_novo});
+      });
+    }
+  })
+  .catch(err => {
+    console.log('problem communicating with db ' + err);
+    res.status(500).json(err);
+  });
+};
 
-    })
-    .catch(err => {
-      console.log('problem communicating with db');
-      res.status(500).json(err);
-    });;
-};*/
+/*exports.updateUsuario = function (req,res){};*/
 
 exports.deleteUsuario = function (req, res) {
   const req_apelido = req.params.apelido;

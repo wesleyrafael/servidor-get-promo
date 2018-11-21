@@ -24,6 +24,15 @@ module.exports = (sequelize,type) => {
     permissao: {
       type: type.INTEGER,
       allowNull: false
+    },
+    categoria_favorita1: {
+      type: type.STRING,
+    },
+    categoria_favorita2: {
+      type: type.STRING,
+    },
+    categoria_favorita3: {
+      type: type.STRING,
     }
   },{
     timestamps: false,

@@ -4,6 +4,9 @@ module.exports = function(app) {
   app.route('/usuario/cadastrarUsuario')
     .post(usuarioController.cadastrarUsuario);
 
+  app.route('/usuario/deleteUsuario')
+    .delete(usuarioController.deleteUsuario);
+
   app.route('/usuario/login/')
     .post(usuarioController.loginUsuario);
 
@@ -13,11 +16,13 @@ module.exports = function(app) {
   app.route('/usuario/listarUsuarios')
     .get(usuarioController.getAllUsuarios);
 
-  app.route('/usuario/deleteUsuario/:apelido')
-    .delete(usuarioController.deleteUsuario);
 
-  /*app.route('/usuario/mudarApelido/:apelidoAntigo')
-    .put(usuarioController.mudarApelido);*/
+
+  app.route('/usuario/mudarApelido/')
+    .put(usuarioController.mudarApelido);
+
+    app.route('/usuario/mudarEmail/')
+      .put(usuarioController.mudarEmail);
 
 
 };

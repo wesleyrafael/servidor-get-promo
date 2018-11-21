@@ -16,13 +16,12 @@ module.exports = function(app) {
   app.route('/usuario/listarUsuarios')
     .get(usuarioController.getAllUsuarios);
 
-
-
   app.route('/usuario/mudarApelido/')
     .put(usuarioController.mudarApelido);
 
-    app.route('/usuario/mudarEmail/')
-      .put(usuarioController.mudarEmail);
+  app.route('/usuario/mudarEmail/')
+    .put(usuarioController.mudarEmail);
 
-
+  app.route('/usuario/mudarSenha/')
+    .put(usuarioController.mudarSenha);
 };

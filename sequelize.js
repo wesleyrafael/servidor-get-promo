@@ -27,6 +27,21 @@ Usuario.hasMany(Anuncio, {
   targetKey: 'apelido'
 });
 
+Categoria.hasMany(Usuario, {
+  foreignKey: 'categoria_favorita1',
+  targetKey: 'nome_categoria'
+});
+
+Categoria.hasMany(Usuario, {
+  foreignKey: 'categoria_favorita2',
+  targetKey: 'nome_categoria'
+});
+
+Categoria.hasMany(Usuario, {
+  foreignKey: 'categoria_favorita3',
+  targetKey: 'nome_categoria'
+});
+
 Anuncio.belongsToMany(Categoria, {
   through: CategoriaAnuncio,
   foreignKey: 'anuncio_id',

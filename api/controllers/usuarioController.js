@@ -230,7 +230,99 @@ exports.mudarEmail = function(req, res) {
         });
 };
 
-/*exports.updateUsuario = function (req,res){};*/
+exports.mudarSenha = function(req, res) {
+    const data = {
+        apelido: req.body.apelido,
+        senha_atual: req.body.senha_atual,
+        senha_nova: req.body.senha_nova
+    };
+
+    if (data.senha_nova == '' || data.senha_atual == '' || data.apelido == '') {
+        res.json('Forneça todos os dados necessários!');
+    }
+
+    Usuario.findOne({
+            attributes: ['senha'],
+            where: {
+                apelido: data.apelido
+            },
+        })
+        .then(usuario => {
+            if (usuario == null) {
+                console.log('apelido não cadastrado');
+                res.json('apelido não cadastrado');
+            } else {
+                hash = usuario.senha;
+                bcrypt.compare(data.senha_atual, hash, function(err, resp) {
+                    if (resp) {
+                        console.log('senha atual confere');
+                        bcrypt
+                            .hash(data.senha_nova, BCRYPT_SALT_ROUNDS)
+                            .then(function(hashedPassword) {
+                                Usuario.update({
+                                    senha: hashedPassword
+                                }, {
+                                    where: {
+                                        apelido: data.apelido
+                                    }
+                                }).then(() => {
+                                    res.status(200).json({
+                                        message: 'senha do usuario ' + data.apelido + ' modificada'
+                                    });
+                                });
+                            })
+
+                    } else {
+                        console.log('senha atual incorreta');
+                        res.json('senha atual incorreta');
+                    }
+                });
+            }
+        })
+        .catch(err => {
+            console.log('problem communicating with db');
+            res.status(500).json(err);
+        });
+
+    bcrypt
+        .hash(data.senha_antiga, BCRYPT_SALT_ROUNDS)
+        .then(function(hashedPassword) {
+            Usuario.findOne({
+                    attributes: ['apelido', 'senha'],
+                    where: {
+                        [Op.and]: [{
+                            apelido: data.apelido
+                        }, {
+                            senha: hashedPassword
+                        }],
+                    },
+                })
+                .then(usuario => {
+                    if (usuario != null) {
+                        console.log('email ja cadastrado');
+                        res.json('email ja cadastrado');
+                    } else {
+                        Usuario.update({
+                            email: email_novo
+                        }, {
+                            where: {
+                                email: email_antigo
+                            }
+                        }).then(() => {
+                            res.status(200).json({
+                                message: 'usuario com email ' + email_antigo +
+                                    ' mudou seu email para ' + email_novo
+                            });
+                        });
+                    }
+                }).catch(err => {
+                    console.log('problem communicating with db ' + err);
+                    res.status(500).json(err);
+                });
+        });
+
+
+};
 
 exports.deleteUsuario = function(req, res) {
     const req_apelido = req.params.apelido;

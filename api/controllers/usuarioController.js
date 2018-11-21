@@ -320,9 +320,51 @@ exports.mudarSenha = function(req, res) {
                     res.status(500).json(err);
                 });
         });
-
-
 };
+
+exports.mudarCategorias = function(req, res) {
+    const data = {
+        apelido: req.body.apelido,
+        favorita1: req.body.categoria_favorita1,
+        favorita2: req.body.categoria_favorita2,
+        favorita3: req.body.categoria_favorita3
+    };
+
+    if (data.apelido == '') {
+        res.json('Informe o apelido!');
+    }
+
+    Usuario.findOne({
+            attributes: ['apelido'],
+            where: {
+                apelido: data.apelido
+            },
+        })
+        .then(usuario => {
+            if (usuario == null) {
+                console.log('Apelido não cadastrado');
+                res.json('Apelido não cadastrado');
+            } else {
+                Usuario.update({
+                    categoria_favorita1: data.favorita1,
+                    categoria_favorita2: data.favorita2,
+                    categoria_favorita3: data.favorita3
+                }, {
+                    where: {
+                        apelido: data.apelido
+                    }
+                }).then(() => {
+                    res.status(200).json({
+                        message: 'categorias do usuario ' + data.apelido + ' atualizadas.'
+                    });
+                });
+            }
+        })
+        .catch(err => {
+            console.log('problem communicating with db ' + err);
+            res.status(500).json(err);
+        });
+}
 
 exports.deleteUsuario = function(req, res) {
     const req_apelido = req.params.apelido;

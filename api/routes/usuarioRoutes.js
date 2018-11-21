@@ -24,4 +24,7 @@ module.exports = function(app) {
 
   app.route('/usuario/mudarSenha/')
     .put(usuarioController.mudarSenha);
+
+  app.route('/usuario/mudarCategorias')
+    .put(usuarioController.mudarCategorias);
 };

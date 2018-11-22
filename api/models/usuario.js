@@ -26,13 +26,13 @@ module.exports = (sequelize,type) => {
       allowNull: false
     },
     categoria_favorita1: {
-      type: type.STRING,
+      type: type.INTEGER,
     },
     categoria_favorita2: {
-      type: type.STRING,
+      type: type.INTEGER,
     },
     categoria_favorita3: {
-      type: type.STRING,
+      type: type.INTEGER,
     }
   },{
     timestamps: false,

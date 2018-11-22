@@ -5,6 +5,6 @@ module.exports = function(app) {
   app.route('/anuncio/cadastrarAnuncio')
     .post(anuncioController.cadastrarAnuncio);
 
-  app.route('/anuncio/categorias/:categoria')
+  app.route('/anuncio/categorias/:id_categoria')
     .get(anuncioController.getAnuncioPorCategoria);
 };

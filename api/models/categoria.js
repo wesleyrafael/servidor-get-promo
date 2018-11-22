@@ -1,10 +1,16 @@
 var sequelize = require('../../sequelize');
 module.exports = (sequelize,type) => {
   return sequelize.define('categoria', {
-    nome_categoria: {
+    id_categoria: {
+      type: type.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    nome_categoria:{
       type: type.STRING,
       allowNull: false,
-      primaryKey: true
+      unique: true
     }
   },{
     timestamps: false,

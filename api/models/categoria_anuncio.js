@@ -1,8 +1,8 @@
 var sequelize = require('../../sequelize');
 module.exports = (sequelize,type) => {
   return sequelize.define('categoria_anuncio', {
-    nome_categoria: {
-      type: type.STRING,
+    id_categoria: {
+      type: type.INTEGER,
       primaryKey: true
     },
     anuncio_id: {

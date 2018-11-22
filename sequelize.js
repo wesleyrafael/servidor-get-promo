@@ -29,17 +29,17 @@ Usuario.hasMany(Anuncio, {
 
 Categoria.hasMany(Usuario, {
   foreignKey: 'categoria_favorita1',
-  targetKey: 'nome_categoria'
+  targetKey: 'id_categoria'
 });
 
 Categoria.hasMany(Usuario, {
   foreignKey: 'categoria_favorita2',
-  targetKey: 'nome_categoria'
+  targetKey: 'id_categoria'
 });
 
 Categoria.hasMany(Usuario, {
   foreignKey: 'categoria_favorita3',
-  targetKey: 'nome_categoria'
+  targetKey: 'id_categoria'
 });
 
 Anuncio.belongsToMany(Categoria, {
@@ -50,8 +50,8 @@ Anuncio.belongsToMany(Categoria, {
 
 Categoria.belongsToMany(Anuncio, {
   through: CategoriaAnuncio,
-  foreignKey: 'nome_categoria',
-  targetKey: 'nome_categoria'
+  foreignKey: 'id_categoria',
+  targetKey: 'id_categoria'
 });
 
 sequelize.sync()

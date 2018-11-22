@@ -5,29 +5,29 @@ var CategoriaAnuncio = sequelize.CategoriaAnuncio;
 
 exports.getAnuncioPorCategoria = function(req, res) {
     const data = {
-        categoria: req.params.categoria
+        id_categoria: req.params.id_categoria
     }
 
     Categoria.findOne({
         where: {
-            nome_categoria: data.categoria
+            id_categoria: data.id_categoria
         }
-    }).then(categoria => {
-        if (categoria == null) {
-            console.log('a categoria ' + data.categoria + ' não existe');
-            res.json('a categoria ' + data.categoria + ' não existe');
+    }).then(id_categoria => {
+        if (id_categoria == null) {
+            console.log('a categoria fornecida não existe');
+            res.json('a categoria fornecida não existe');
         } else {
             CategoriaAnuncio.findAll({
                     attributes: ['anuncio_id'],
                     where: {
-                        nome_categoria: data.categoria
+                        id_categoria: data.id_categoria
                     },
                     raw: true
                 })
                 .then(ids => {
                     if (ids == null) {
-                        console.log('nenhum anuncio cadastrado nessa categoria');
-                        res.json('nenhum anuncio cadastrado nessa categoria');
+                        console.log('nenhum anuncio cadastrado nessa id_categoria');
+                        res.json('nenhum anuncio cadastrado nessa id_categoria');
                     } else {
                         var unpacked_ids = [];
                         ids.forEach(function(an_id) {
@@ -61,21 +61,22 @@ exports.cadastrarAnuncio = function(req, res) {
         data_criacao: req.body.data_criacao,
         data_expiracao: req.body.data_expiracao,
         local: req.body.local,
-        categorias: [req.body.categoria1, req.body.categoria2, req.body.categoria3]
+        id_categorias: [req.body.id_categoria1, req.body.id_categoria2, req.body.id_categoria3],
+        foto: req.body.foto
     };
 
-    categoriasValidas = [];
-    data.categorias.forEach(function(categoria) {
-        if (categoria != null) {
-            categoriasValidas.push(categoria);
+    id_categoriasValidas = [];
+    data.id_categorias.forEach(function(id_categoria) {
+        if (id_categoria != null) {
+            id_categoriasValidas.push(id_categoria);
         }
     })
 
-    if (data.local == '' || data.id === '' || data.apelido_anunciante === '' ||
+    if (data.local == '' || data.id === null || data.apelido_anunciante === '' ||
         data.descricao === '' || data.data_criacao === '' || data.data_expiracao == '') {
         res.json('Dados incompletos!');
     }
-    var success_flag = 0;
+
     Anuncio.findOne({
             where: {
                 apelido_anunciante: data.apelido_anunciante,
@@ -96,14 +97,15 @@ exports.cadastrarAnuncio = function(req, res) {
                     descricao: data.descricao,
                     data_criacao: data.data_criacao,
                     data_expiracao: data.data_expiracao,
-                    local: data.local
+                    local: data.local,
+                    foto: data.foto
                 }).then(() => {
                     console.log('anuncio criado no db');
 
-                    categoriasValidas.forEach(function(categoria) {
+                    id_categoriasValidas.forEach(function(id_categoria) {
                         CategoriaAnuncio.create({
                             anuncio_id: data.id,
-                            nome_categoria: categoria
+                            id_categoria: id_categoria
                         });
                     });
 

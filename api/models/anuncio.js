@@ -24,6 +24,9 @@ module.exports = (sequelize,type) => {
     local: {
       type: type.STRING,
       allowNull: false
+    },
+    foto: {
+      type: type.BLOB
     }
   },{
     timestamps: false,

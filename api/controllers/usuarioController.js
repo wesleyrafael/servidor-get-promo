@@ -73,7 +73,6 @@ exports.loginUsuario = function(req, res) {
     const req_email = req.body.email;
 
     Usuario.findOne({
-            attributes: ['senha'],
             where: {
                 email: req_email
             },
@@ -86,8 +85,8 @@ exports.loginUsuario = function(req, res) {
                 hash = usuario.senha;
                 bcrypt.compare(req_senha, hash, function(err, resp) {
                     if (resp) {
-                        console.log('OK');
-                        res.json('OK');
+                        console.log('Login autorizado - usuario de email' + req_email);
+                        res.status(200).json(usuario);
                     } else {
                         console.log('senha incorreta');
                         res.json('senha incorreta');

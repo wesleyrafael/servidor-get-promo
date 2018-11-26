@@ -71,4 +71,4 @@ sequelize.sync()
       console.log('Users db and user table have been created')
     });
 
-module.exports = {Usuario, Anuncio, Categoria, CategoriaAnuncio};
+module.exports = {Usuario, Anuncio, Categoria, CategoriaAnuncio, AvAnuncio};

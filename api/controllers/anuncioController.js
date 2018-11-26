@@ -2,6 +2,50 @@ var sequelize = require('../../sequelize');
 var Anuncio = sequelize.Anuncio;
 var Categoria = sequelize.Categoria;
 var CategoriaAnuncio = sequelize.CategoriaAnuncio;
+var AvAnuncio = sequelize.AvAnuncio;
+
+exports.avaliarAnuncio = function (req,res) {
+  const data = {
+        id_avaliacao: req.id_avaliacao,
+        anuncio_id: req.anuncio_id,
+        apelido_avaliador: req.apelido_avaliador,
+        data_avaliacao: req.data_avaliacao,
+        valor: req.valor,
+        comentario: req.comentario
+  }
+
+  AvAnuncio.findOne({
+    where: {
+      apelido_avaliador: data.apelido_avaliador,
+      anuncio_id: data.anuncio_id
+    }
+  }).then(avaliacao => {
+    if(avaliacao != null){
+      console.log('Voce ja avaliou esse anuncio!');
+      res.json('Voce ja avaliou esse anuncio!');
+    }
+    else{
+      AvAnuncio.create({
+        id_avaliacao: data.id_avaliacao,
+        anuncio_id: data.anuncio_id,
+        apelido_avaliador: data.apelido_avaliador,
+        data_avaliacao: data.data_avaliacao,
+        valor: data.valor,
+        comentario: data.comentario
+      }).then(() => {
+        console.log('avaliacao cadastrada com sucesso!');
+        res.status(200).send({
+          message: 'avaliacao cadastrada com sucesso!'
+        });
+      })
+    }
+  })
+  .catch(err => {
+      console.log('problem communicating with db ' + err);
+      res.status(500).json(err);
+  });
+
+}
 
 exports.getAnuncioPorCategoria = function(req, res) {
     const data = {

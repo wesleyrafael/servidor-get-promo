@@ -4,6 +4,29 @@ var Categoria = sequelize.Categoria;
 var CategoriaAnuncio = sequelize.CategoriaAnuncio;
 var AvAnuncio = sequelize.AvAnuncio;
 
+exports.getAvaliacoesDoAnuncio = function(req,res) {
+  const an_id = req.anuncio_id;
+
+  AvAnuncio.findAll({
+    where:{
+      anuncio_id: an_id
+    }
+  }).then(anuncios => {
+      if(anuncios == null){
+        console.log('Anuncio sem avaliações!');
+        res.json('Anuncio sem avaliações');
+      }
+      else{
+        console.log('Avaliações enviadas');
+        res.json(anuncios);
+      }
+  })
+  .catch(err => {
+      console.log('problem communicating with db');
+      res.status(500).json(err);
+  });
+}
+
 exports.avaliarAnuncio = function (req,res) {
   const data = {
         id_avaliacao: req.id_avaliacao,

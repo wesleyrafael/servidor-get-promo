@@ -5,7 +5,7 @@ var CategoriaAnuncio = sequelize.CategoriaAnuncio;
 var AvAnuncio = sequelize.AvAnuncio;
 
 exports.getAvaliacoesDoAnuncio = function(req, res) {
-	const an_id = req.anuncio_id;
+	const an_id = req.params.anuncio_id;
 
 	AvAnuncio.findAll({
 			where: {
@@ -28,12 +28,12 @@ exports.getAvaliacoesDoAnuncio = function(req, res) {
 
 exports.avaliarAnuncio = function(req, res) {
 	const data = {
-		id_avaliacao: req.id_avaliacao,
-		anuncio_id: req.anuncio_id,
-		apelido_avaliador: req.apelido_avaliador,
-		data_avaliacao: req.data_avaliacao,
-		valor: req.valor,
-		comentario: req.comentario
+		id_avaliacao: req.body.id_avaliacao,
+		anuncio_id: req.body.anuncio_id,
+		apelido_avaliador: req.body.apelido_avaliador,
+		data_avaliacao: req.body.data_avaliacao,
+		valor: req.body.valor,
+		comentario: req.body.comentario
 	}
 
 	AvAnuncio.findOne({

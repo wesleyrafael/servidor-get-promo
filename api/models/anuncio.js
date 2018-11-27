@@ -21,7 +21,11 @@ module.exports = (sequelize,type) => {
       type: type.DATE,
       allowNull: false
     },
-    local: {
+    latitude: {
+      type: type.STRING,
+      allowNull: false
+    },
+    longitude: {
       type: type.STRING,
       allowNull: false
     },

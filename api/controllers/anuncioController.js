@@ -125,7 +125,8 @@ exports.cadastrarAnuncio = function(req, res) {
 		descricao: req.body.descricao,
 		data_criacao: req.body.data_criacao,
 		data_expiracao: req.body.data_expiracao,
-		local: req.body.local,
+		latitude: req.body.latitude,
+		longitude: req.body.longitude,
 		id_categorias: [req.body.id_categoria1, req.body.id_categoria2, req.body.id_categoria3],
 		foto: req.body.foto
 	};
@@ -148,7 +149,8 @@ exports.cadastrarAnuncio = function(req, res) {
 				descricao: data.descricao,
 				data_criacao: data.data_criacao,
 				data_expiracao: data.data_expiracao,
-				local: data.local,
+				latitude: req.body.latitude,
+				longitude: req.body.longitude
 			}
 		})
 		.then(anuncio => {
@@ -162,7 +164,8 @@ exports.cadastrarAnuncio = function(req, res) {
 					descricao: data.descricao,
 					data_criacao: data.data_criacao,
 					data_expiracao: data.data_expiracao,
-					local: data.local,
+					latitude: req.body.latitude,
+					longitude: req.body.longitude,
 					foto: data.foto
 				}).then(() => {
 					console.log('anuncio criado no db');

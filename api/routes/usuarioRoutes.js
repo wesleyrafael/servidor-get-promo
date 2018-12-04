@@ -19,6 +19,9 @@ module.exports = function(app) {
   app.route('/usuario/mudarApelido/')
     .put(usuarioController.mudarApelido);
 
+  app.route('/usuario/mudarNome/')
+    .put(usuarioController.mudarNome);
+
   app.route('/usuario/mudarEmail/')
     .put(usuarioController.mudarEmail);
 

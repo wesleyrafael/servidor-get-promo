@@ -229,6 +229,30 @@ exports.mudarEmail = function(req, res) {
 		});
 };
 
+exports.mudarNome = function(req, res) {
+	const apelido = req.body.apelido;
+	const nome_novo = req.body.nome_novo;
+	if (nome_novo == '') {
+		res.json('Dados incompletos!');
+	}
+
+	Usuario.update({
+		nome: nome_novo
+		}, {
+		where: {
+			apelido: apelido
+		}
+	}).then(() => {
+		res.status(200).json({
+			message: 'nome modificado com sucesso!'
+		});
+	})
+	.catch(err => {
+		console.log('problem communicating with db ' + err);
+		res.status(500).json(err);
+	});
+}
+
 exports.mudarSenha = function(req, res) {
 	const data = {
 		apelido: req.body.apelido,

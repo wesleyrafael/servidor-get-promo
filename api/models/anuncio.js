@@ -10,6 +10,10 @@ module.exports = (sequelize,type) => {
       type: type.STRING,
       allowNull: false
     },
+    titulo: {
+      type: type.STRING,
+      allowNull: false
+    },
     descricao: {
       type: type.STRING,
       allowNull: false

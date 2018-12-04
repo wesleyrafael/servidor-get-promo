@@ -100,6 +100,7 @@ exports.cadastrarAnuncio = function(req, res) {
 	const data = {
 		id: req.body.anuncio_id,
 		apelido_anunciante: req.body.apelido_anunciante,
+		titulo: req.body.titulo,
 		descricao: req.body.descricao,
 		data_criacao: req.body.data_criacao,
 		data_expiracao: req.body.data_expiracao,
@@ -109,7 +110,7 @@ exports.cadastrarAnuncio = function(req, res) {
 		foto: req.body.foto
 	};
 
-	if (data.local == '' || data.id == null || data.apelido_anunciante == '' ||
+	if (data.titulo == '' || data.local == '' || data.id == null || data.apelido_anunciante == '' ||
 		data.descricao == '' || data.data_criacao == '' || data.data_expiracao == '' || data.id_categoria == '' ) {
 		res.json('Dados incompletos!');
 	}
@@ -117,6 +118,7 @@ exports.cadastrarAnuncio = function(req, res) {
 	Anuncio.findOne({
 			where: {
 				apelido_anunciante: data.apelido_anunciante,
+				titulo: data.titulo,
 				descricao: data.descricao,
 				data_criacao: data.data_criacao,
 				data_expiracao: data.data_expiracao,
@@ -133,6 +135,7 @@ exports.cadastrarAnuncio = function(req, res) {
 				Anuncio.create({
 					anuncio_id: data.id,
 					apelido_anunciante: data.apelido_anunciante,
+					titulo: data.titulo,
 					descricao: data.descricao,
 					data_criacao: data.data_criacao,
 					data_expiracao: data.data_expiracao,

@@ -4,6 +4,7 @@ module.exports = (sequelize,type) => {
     id_avaliacao: {
       type: type.INTEGER,
       primaryKey: true,
+      autoIncrement: true
     },
     apelido_avaliador: { // FK
       type: type.STRING,

@@ -2,7 +2,6 @@ var Sequelize = require('sequelize');
 var UsuarioModel = require('./api/models/usuario');
 var AnuncioModel = require('./api/models/anuncio');
 var CategoriaModel = require('./api/models/categoria');
-var CategoriaAnuncioModel = require('./api/models/categoria_anuncio');
 var AvAnuncioModel = require('./api/models/avaliacao_anuncio');
 
 const sequelize = new Sequelize('getPromoDB','getpromo','getpromo2018',{
@@ -21,7 +20,6 @@ const sequelize = new Sequelize('getPromoDB','getpromo','getpromo2018',{
 const Usuario = UsuarioModel(sequelize,Sequelize);
 const Anuncio = AnuncioModel(sequelize,Sequelize);
 const Categoria = CategoriaModel(sequelize,Sequelize);
-const CategoriaAnuncio = CategoriaAnuncioModel(sequelize,Sequelize);
 const AvAnuncio = AvAnuncioModel(sequelize,Sequelize);
 
 Usuario.hasMany(Anuncio, {
@@ -44,14 +42,7 @@ Categoria.hasMany(Usuario, {
   targetKey: 'id_categoria'
 });
 
-Anuncio.belongsToMany(Categoria, {
-  through: CategoriaAnuncio,
-  foreignKey: 'anuncio_id',
-  targetKey: 'anuncio_id'
-});
-
-Categoria.belongsToMany(Anuncio, {
-  through: CategoriaAnuncio,
+Categoria.hasMany(Anuncio, {
   foreignKey: 'id_categoria',
   targetKey: 'id_categoria'
 });
@@ -71,4 +62,4 @@ sequelize.sync()
       console.log('Users db and user table have been created')
     });
 
-module.exports = {Usuario, Anuncio, Categoria, CategoriaAnuncio, AvAnuncio};
+module.exports = {Usuario, Anuncio, Categoria, AvAnuncio};

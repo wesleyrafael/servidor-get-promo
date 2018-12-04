@@ -4,6 +4,7 @@ module.exports = (sequelize,type) => {
     anuncio_id: {
       type: type.INTEGER,
       primaryKey: true,
+      autoIncrement: true
     },
     apelido_anunciante: {
       type: type.STRING,
@@ -31,6 +32,10 @@ module.exports = (sequelize,type) => {
     },
     foto: {
       type: type.BLOB
+    },
+    id_categoria: {
+      type: type.INTEGER,
+      allowNull: false
     }
   },{
     timestamps: false,

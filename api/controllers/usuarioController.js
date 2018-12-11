@@ -390,7 +390,7 @@ exports.mudarCategorias = function(req, res) {
 }
 
 exports.deleteUsuario = function(req, res) {
-	const req_apelido = req.params.apelido;
+	const req_apelido = req.body.apelido;
 	Usuario.findOne({
 			where: {
 				apelido: req_apelido
